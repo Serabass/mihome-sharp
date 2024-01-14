@@ -1,31 +1,40 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace SpeechGen.Balcon;
 
 public class BalconLocal : BalconBase
 {
-    private readonly string _balconPath = @"M:\dev\csharp\mihome\SpeechGen\balcon-bin\balcon-bin\balcon.exe";
+    private readonly string _balconPath = @"M:\dev\csharp\mihome\SpeechGen\balcon-bin\balcon.exe";
 
-    private readonly string _balconVoice;
+    private readonly string _balconVoice = "IVONA 2 Maxim OEM";
+
+    private string buildArgs(Dictionary<string, string> args)
+    {
+        var sb = new StringBuilder();
+        foreach (var (key, value) in args)
+        {
+            sb.Append($"-{key} \"{value}\" ");
+        }
+        return sb.ToString();
+    }
 
     public override async Task<string> ConvertWavToOgg(string wavPath)
     {
-        var tmpPath = $"{Path.GetTempFileName()}.ogg";
-        Process process = new();
-        process.StartInfo.FileName = "ffmpeg";
-        process.StartInfo.Arguments = $"-i \"{wavPath}\" -acodec libopus -b:a 128k \"{tmpPath}\"";
-        process.Start();
-        process.WaitForExit();
-        File.Delete(wavPath);
-        return tmpPath;
+        throw new NotImplementedException();
     }
 
     public override async Task<string> GenerateSpeechWav(string text)
     {
-        var tmpPath = $"{Path.GetTempFileName()}.wav";
+        var tmpPath = $"1.wav";
         Process process = new();
         process.StartInfo.FileName = _balconPath;
-        process.StartInfo.Arguments = $"-n \"{_balconVoice}\" -t \"{text}\" -w \"{tmpPath}\"";
+        process.StartInfo.Arguments = buildArgs(new Dictionary<string, string>
+        {
+            {"n", _balconVoice},
+            {"t", text},
+            {"w", tmpPath}
+        });
         process.Start();
         process.WaitForExit();
         return tmpPath;
