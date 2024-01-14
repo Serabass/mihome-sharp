@@ -1,8 +1,7 @@
-﻿using MihomeCLI;
-using SpeechGen.Balcon;
+﻿using SpeechGen.Balcon;
 
 var b = new BalconLocal();
-var text = "Hello, world!";
+var text = "Пошел нахуй";
 var wavPath = await b.GenerateSpeechWav(text);
 // var oggPath = await b.ConvertWavToOgg(wavPath);
 

@@ -20,14 +20,9 @@ public class BalconLocal : BalconBase
         return sb.ToString();
     }
 
-    public override async Task<string> ConvertWavToOgg(string wavPath)
-    {
-        throw new NotImplementedException();
-    }
-
     public override async Task<string> GenerateSpeechWav(string text)
     {
-        var tmpPath = $"1.wav";
+        var tmpPath = @"M:\dev\csharp\mihome\SpeechGen\bin\Debug\net8.0\1.wav";
         Process process = new();
         process.StartInfo.FileName = _balconPath;
         process.StartInfo.Arguments = _buildArgs(new Dictionary<string, string>
