@@ -9,13 +9,14 @@ public class BalconLocal : BalconBase
 
     private readonly string _balconVoice = "IVONA 2 Maxim OEM";
 
-    private string buildArgs(Dictionary<string, string> args)
+    private string _buildArgs(Dictionary<string, string> args)
     {
         var sb = new StringBuilder();
         foreach (var (key, value) in args)
         {
             sb.Append($"-{key} \"{value}\" ");
         }
+
         return sb.ToString();
     }
 
@@ -29,7 +30,7 @@ public class BalconLocal : BalconBase
         var tmpPath = $"1.wav";
         Process process = new();
         process.StartInfo.FileName = _balconPath;
-        process.StartInfo.Arguments = buildArgs(new Dictionary<string, string>
+        process.StartInfo.Arguments = _buildArgs(new Dictionary<string, string>
         {
             {"n", _balconVoice},
             {"t", text},
